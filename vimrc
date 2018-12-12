@@ -13,6 +13,7 @@ set background=dark
 colorscheme pablo
 set scrolloff=5               " Show 5 lines of context around the cursor.
 set lbr                       " Don't line wrap mid-word.
+"set mouse=v                  " Enable the use of the mousein visual mode.
 
 """ change the mapleader from \ to ,
 " NOTE: This has to be set before <leader> is used.
