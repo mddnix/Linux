@@ -1,0 +1,8 @@
+# vim /etc/udev/rules.d/99-hide-disks.rules 
+ENV{ID_FS_UUID}=="2203d3e1-1379-4ad6-87b4-3f4f728f4863",ENV{UDISKS_IGNORE}="1"
+ENV{ID_FS_UUID}=="b112d118-8e91-4452-8e81-20904ee6293b",ENV{UDISKS_IGNORE}="1"
+ENV{ID_FS_UUID}=="e692cfea-97a7-46ac-bcba-532052e46c50",ENV{UDISKS_IGNORE}="1"
+
+## RELOADING THE RULES:
+# udevadm control --reload-rules
+# udevadm trigger
