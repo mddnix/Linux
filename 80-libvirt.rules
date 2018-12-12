@@ -1,0 +1,12 @@
+/*
+Allow users in wheel group to manage the libvirt daemon without authentication.
+Copy this file as /etc/polkit-1/rules.d/80-libvirt.rules. 
+Also, add this line in user's .bashrc file.
+export LIBVIRT_DEFAULT_URI=qemu:///system 
+*/ 
+polkit.addRule(function(action, subject) { 
+  if (action.id == "org.libvirt.unix.manage" && 
+    subject.isInGroup("wheel")) { 
+      return polkit.Result.YES; 
+    } 
+});
