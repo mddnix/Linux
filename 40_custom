@@ -1,0 +1,58 @@
+#!/bin/sh 
+echo "Adding 40_custom_entries">&2 
+exec tail -n +3 $0 
+  
+menuentry "System Rescue CD" {  
+  set root='(hd0,8)'  
+  search --no-floppy --fs-uuid --set=root b112d118-8e91-4452-8e81-20904ee6293b 
+  linuxefi /sysrcd/rescue64 subdir=sysrcd setkmap=us  
+  initrdefi /sysrcd/initram.igz  
+}  
+  
+menuentry "Puppy Linux" { 
+  set root='(hd0,3)' 
+  search --no-floppy --fs-uuid --set=root 7b752bd2-ce4b-46c9-9f4a-f02083486056 
+  linux /vmlinuz  
+  initrd /initrd.gz 
+} 
+ 
+menuentry "Clonezilla" { 
+  set root=(hd0,3) 
+  linux /live-hd/vmlinuz boot=live union=overlay username=user config components quiet noswap nolocales edd=on nomodeset ocs_live_run=\"ocs-live-general\" ocs_live_extra_param=\"\" keyboard-layouts= ocs_live_batch=\"no\" locales= vga=788 ip=frommedia nosplash live-media-path=/live-hd bootfrom=/dev/sda3 toram=filesystem.squashfs 
+  initrd /live-hd/initrd.img 
+}  
+ 
+menuentry 'Kali Linux' { 
+    load_video 
+    insmod gzio 
+    if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi 
+    insmod part_gpt 
+    insmod lvm 
+    insmod ext2 
+    set root='lvmid/I0XYh5-HXxM-uoDb-IVD8-ZW67-n110-BBY7Py/RRQXzv-6d0g-MHNq-Mk7H-SavJ-5WVP-3hq3Px' 
+    search --no-floppy --fs-uuid --set=root --hint='lvmid/I0XYh5-HXxM-uoDb-IVD8-ZW67-n110-BBY7Py/RRQXzv-6d0g-MHNq-Mk7H-SavJ-5WVP-3hq3Px'  df70183b-c776-4d75-aea8-2039092a2beb 
+#  search --no-floppy --fs-uuid --set=root df70183b-c776-4d75-aea8-2039092a2beb 
+    linuxefi    /boot/vmlinuz-4.9.0-kali4-amd64 root=/dev/mapper/nq-ki ro  quiet 
+    initrdefi    /boot/initrd.img-4.9.0-kali4-amd64 
+} 
+ 
+menuentry 'Fedora Linux - Make Snapshots'  --class fedora --class gnu-linux --class gnu --class os { 
+  load_video 
+  set gfxpayload=1440x900 
+  insmod gzio 
+  insmod part_gpt 
+  insmod ext2 
+  set root='hd0,gpt1' 
+  echo 'Loading Linux core repo kernel ...' 
+  linuxefi /vmlinuz-4.15.12-301.fc27.x86_64 root=/dev/mapper/mdd-svr ro crashkernel=auto rd.lvm.lv=mdd/svr quiet LANG=en_IN.UTF-8 systemd.unit=,y-lvm-snapshot.target 
+  echo 'Loading initial ramdisk ...' 
+  initrdefi /initramfs-4.15.12-301.fc27.x86_64.img 
+} 
+ 
+menuentry 'CentOS Make Snapshots' --class centos --class gnu-linux --class gnu --class os { 
+  set root='hd0,gpt1'  
+  echo 'Loading Linux core repo kernel ...'  
+  linuxefi /vmlinuz-3.10.0-693.el7.x86_64 root=/dev/mapper/mdd-svr ro crashkernel=auto rd.lvm.lv=mdd/svr quiet LANG=en_IN.UTF-8 systemd.unit=my-lvm-snapshot.target    
+  echo 'Loading initial ramdisk ...'  
+  initrdefi /initramfs-3.10.0-693.el7.x86_64.img    
+}  
