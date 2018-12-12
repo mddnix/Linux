@@ -1,0 +1,13 @@
+https://www.kirsle.net/wizards/ps1.html
+
+Preview: [user@host /home/user]$
+
+Green: export export PS1="\[$(tput bold)\]\[$(tput setaf 2)\][\u@\h \w]\\$ \[$(tput sgr0)\]"
+Cyan: export PS1="\[$(tput bold)\]\[$(tput setaf 6)\][\u@\h \w]\\$ \[$(tput sgr0)\]"
+Red: export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\u@\h \w]\\$ \[$(tput sgr0)\]"
+Yellow: export PS1="\[$(tput bold)\]\[$(tput setaf 3)\][\u@\h \w]\\$ \[$(tput sgr0)\]"
+Blue: export PS1="\[$(tput bold)\]\[$(tput setaf 4)\][\u@\h \w]\\$ \[$(tput sgr0)\]"
+Magenta: export PS1="\[$(tput bold)\]\[$(tput setaf 5)\][\u@\h \w]\\$ \[$(tput sgr0)\]"
+
+To avoid tty error:
+tty -s && export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\u@\h \w]\\$ \[$(tput sgr0)\]"
