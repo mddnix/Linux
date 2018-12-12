@@ -1,0 +1,6 @@
+$ sudo visudo
+
+Defaults      env_reset
+Defaults      editor=/usr/bin/vim, !env_editor
+
+madhu ALL=(ALL) NOPASSWD: /usr/sbin/nethogs enp3s0
